@@ -46,7 +46,7 @@ int main(){
     int oddSubStringCount = 0;
     int evenSubStringCount = 0;
 
-    // looping over the while string length
+    // looping over the whole string length
     // to calculate odd and even substrings for every center
     // i.e every ith position
     for(int i=0;i<n;i++){
