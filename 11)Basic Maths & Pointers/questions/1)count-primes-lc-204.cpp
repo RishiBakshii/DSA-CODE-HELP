@@ -86,7 +86,7 @@ int sqrtApproch(int n){
 int sieveOfEratosthenes(int n){
 
     // O(n * log (logn) )
-    
+
     if(n==0) return 0;
 
     // marking everynumber prime i.e true
@@ -121,7 +121,11 @@ int sieveOfEratosthenes(int n){
 
 
 // 4
-
+int segmentedSeive(){
+    // this one is as same as sieveOfEratosthenes
+    // but is used when we have been given low and high i.e l and h
+    // and in that search area we need to find prime numbers
+}
 
 int main(){
 
