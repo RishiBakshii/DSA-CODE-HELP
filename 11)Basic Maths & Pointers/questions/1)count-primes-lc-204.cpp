@@ -98,11 +98,15 @@ int sieveOfEratosthenes(int n){
     int ans = 0;
     int count=0;
 
-    for(int i=2;i<n;i++){
+    for(int i=2;i<n || i*i<=n;i++){
 
         if(primeOrNot[i]){
             
-            int j=2;
+            // int j=2;
+
+            // optimizition
+            // first unmarked number would be *i as others have been marked by 2 to (i-1);
+            int j=i;
             int tableNum = i*j;
 
             while(tableNum<=n-1){
@@ -121,16 +125,86 @@ int sieveOfEratosthenes(int n){
 
 
 // 4
-int segmentedSeive(){
+vector<bool> segmentedSeive(int l, int r){
     // this one is as same as sieveOfEratosthenes
     // but is used when we have been given low and high i.e l and h
     // and in that search area we need to find prime numbers
+
+    // generate all primes till sqrt(r)
+    vector<bool> seive(sqrt(r),true);
+
+    seive[0]=seive[1]=false;
+
+    for(int i=2;i<seive.size() && i*i<=r;i++){
+
+        if(seive[i]){
+
+            int j=i;
+            int iTable = j*i;
+
+            while(iTable<=r){
+                seive[iTable]=false;
+                iTable=i*++j;
+            }
+
+        }
+
+    }
+
+    // basePrimes
+    vector<int> basePrimes;
+    
+    // so in this step we are traversing through the primes
+    // that are in range of sqrt(r) that are stored in seive vector
+    // and those are are primes we are pushing them in basePrimes vector
+    for(int i=0;i<seive.size();i++){
+        if(seive[i]) basePrimes.push_back(i);
+    }
+
+    // now we are making segmented seive
+    vector<bool> segSeive(r-l+1);
+
+    if(l==1 || l==0){
+        segSeive[l]=false;
+    }
+
+    for(auto prime:basePrimes){
+
+        int firstMul = (l/prime)*prime;
+
+        if(firstMul<l){
+            firstMul+=prime;
+        }
+
+        int j = max(firstMul,prime*prime);
+
+        while(j<=r){
+            segSeive[j-l]=false;
+            j+=prime;
+        }
+
+    }
+
+    return segSeive;
 }
 
 int main(){
 
     // cout<<sqrtApproch(10);
-    cout<<sieveOfEratosthenes(10);
+    // cout<<sieveOfEratosthenes(10);
+
+    int l=90;
+    int r=150;
+
+    vector<bool> segSeive = segmentedSeive(l,r);
+
+    for(int i=0;i<segSeive.size();i++){
+
+        if(segSeive[i]){
+            cout<<i+l<<endl;
+        }
+
+    }
     
     return 0;
 }
