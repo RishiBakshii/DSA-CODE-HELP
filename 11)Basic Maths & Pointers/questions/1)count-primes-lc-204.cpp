@@ -83,6 +83,9 @@ int sqrtApproch(int n){
 
 
 // 3
+// this is a very important algorithm 
+//1) count primes
+//2) product of primes
 int sieveOfEratosthenes(int n){
 
     // O(n * log (logn) )
@@ -98,6 +101,7 @@ int sieveOfEratosthenes(int n){
     int ans = 0;
     int count=0;
 
+    // optimization (i*i<=n)
     for(int i=2;i<n || i*i<=n;i++){
 
         if(primeOrNot[i]){
@@ -106,12 +110,13 @@ int sieveOfEratosthenes(int n){
 
             // optimizition
             // first unmarked number would be *i as others have been marked by 2 to (i-1);
-            int j=i;
-            int tableNum = i*j;
+            int tableNum = i*i;
 
             while(tableNum<=n-1){
+                // as the multiples of a prime number are not prime
+                //  we will mark them as false
                 primeOrNot[tableNum]=false;
-                tableNum=i*++j;
+                tableNum+=i;
             }
         }
     }

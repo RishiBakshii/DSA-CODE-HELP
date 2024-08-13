@@ -8,7 +8,7 @@ int slowExponentiation(int a, int b){
 
     int ans=1;
 
-    for(int i=0;i<5;i++){
+    for(int i=0;i<b;i++){
         ans*=a;
     }
 
@@ -24,12 +24,9 @@ int fastExponentiation(int a, int b){
 
     while(b>0){
 
-        if(b&1){
-            // odd
-            ans*=a;
-        }
+        if(b&1) ans = ans * a;
         a = a*a;
-        b/=2;
+        b>>1;
 
     }
 
@@ -45,3 +42,5 @@ int main(){
 
     return 0;
 }
+
+
