@@ -1,50 +1,29 @@
-#include<iostream>
-#include<unordered_map>
-#include<algorithm>
-using namespace std;
+int sherlockAndAnagrams(string s)
+{
+    unordered_map<string, int> anagramatic_substring_count;
+    int anagram_pairs = 0; // ans yahi find krna hai
 
-
-int sherlockAndAnagrams(string s){
-
-    unordered_map<string,int> map;
-    int n = s.size();
-
-    int anagramaticPairs = 0;
-
-    for(int i=0;i<n;i++){
-
-        for(int j=i;j<n;j++){
-            
-            string substring = s.substr(i,j-i+1);
-            sort(substring.begin(),substring.end());
-            map[substring]++;
-
+    // Generate all substrings
+    for (int i = 0; i < s.size(); i++)
+    {
+        for (int j = i; j < s.size(); j++)
+        {
+            string substring = s.substr(i, j - i + 1);
+            // sort
+            sort(substring.begin(), substring.end());
+            // update count in map
+            anagramatic_substring_count[substring]++;
         }
-
     }
 
-
-    // calculating number of pairs
-
-    for(auto element:map){
-
-        int count = element.second;
-
-        int numberOfPairs = (count * (count - 1)) / 2;
-        anagramaticPairs+=numberOfPairs;
-
+    // Cal. pairs
+    for (auto e : anagramatic_substring_count)
+    {
+        int count = e.second;
+        // if(count > 1){
+        // find unique pairs
+        anagram_pairs += (count * (count - 1)) / 2;
+        // }
     }
-
-    return anagramaticPairs;
-
-
-}
-
-int main(){
-
-
-    string s = "kkkk";
-    cout<<sherlockAndAnagrams(s);
-    
-    return 0;
+    return anagram_pairs;
 }
