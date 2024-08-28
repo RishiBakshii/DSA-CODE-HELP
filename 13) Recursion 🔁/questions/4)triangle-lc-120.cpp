@@ -3,23 +3,16 @@
 #include<limits.h>
 using namespace std;
 
-void solve(vector<vector<int>>&triangle,int sum,int i,int& ans, int col){
-
-    int n = triangle.size();
-
-    // base case
-    if(i==n-1){
-        ans = min(ans,sum);
-        return;
+    int solve(vector<vector<int>> &triangle,int sum,int row, int&ans, int col)
+    {
+        if (row == triangle.size())
+        {
+            return 0;
+        }
+        int down = triangle[row][col] + solve(triangle, row + 1, col);
+        int plus = triangle[row][col] + solve(triangle, row + 1, col + 1);
+        return min(down, plus);
     }
-
-    solve(triangle,sum+triangle[i][col],i+1,ans,col);
-    solve(triangle,sum+triangle[i][col],i+1,ans,col+1);
-
-    solve(triangle,sum+triangle[i][col+1],i+1,ans,col+1);
-    solve(triangle,sum+triangle[i][col+1],i+1,ans,col+2);
-
-}
 
 int main(){
     
