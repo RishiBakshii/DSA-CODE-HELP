@@ -17,8 +17,7 @@ void printSubsequences(string str, int i, string output,vector<string> &ans) {
   printSubsequences(str,i+1,output,ans);
 }
 
-void printSubsequences(string str, int i, 
-string output,vector<string> &ans) {
+void printSubsequences(string str, int i, string output,vector<string> &ans) {
   //base case
   if(i == str.length()) {
     ans.push_back(output);
