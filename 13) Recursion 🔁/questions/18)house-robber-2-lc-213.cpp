@@ -1,7 +1,6 @@
 /*
 
-In thsi the main catch is if we rob 1st house then we cannot rob last house
-
+In this the main catch is if we rob 1st house then we cannot rob last house
 And if we rob last house then also we cannot rob first house
 
 so these are the two conditions
