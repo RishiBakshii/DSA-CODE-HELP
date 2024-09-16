@@ -1,7 +1,6 @@
 /* 
 
 
-
 started off with merge two sorted arrays question
 
 divide and conquer discussion:
