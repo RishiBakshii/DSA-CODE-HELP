@@ -1,153 +1,144 @@
-#include <iostream>
+#include<iostream>
 #include<vector>
 using namespace std;
 
-// void mergeSortedArrays(int arr[], int sizeArr, int brr[], int sizeBrr, vector<int> &ans) {
+// TC => O(nlogn)
+void printArray(vector<int>&arr){
 
-//   int i = 0;
-//   int j = 0;
-//   // i-> arr;
-//   //j -> brr;
-
-//   //jab tak i and j arrays k bounds k andar hai
-//   while( i < sizeArr && j < sizeBrr) {
-//     if(arr[i] < brr[j]) {
-//       ans.push_back(arr[i]);
-//       i++;
-//     }
-//     else {
-//       ans.push_back(brr[j]);
-//       j++;
-//     }
-//   }
-
-//   //agar main yaha tk aagya 
-//   //toh 2 cases ho skte h 
-//   //1 case -> arr me still elements bache hai
-//   while(i < sizeArr) {
-//     ans.push_back(arr[i]);
-//     i++;
-//   }
-//   //2 case -> brr me still elements bache hai
-//   while(j < sizeBrr) {
-//     ans.push_back(brr[j]);
-//     j++;
-//   }
-
-// }
-
-void merge(int arr[], int s, int e, int mid) {
-
-  //create left and right arrays
-  int leftLength = mid-s+1;
-  int rightLength = e - mid;
-  
-  int *leftArr = new int[leftLength];
-  int *rightArr = new int[rightLength];
-
-  //fill or copy the left and right arrays 
-  ///copy original array -> values
-  //original array ka starting index
-  int index = s;
-  //copying into left array
-  for(int i=0; i<leftLength; i++) {
-    leftArr[i] = arr[index];
-    index++;
-  }
-  //copying into right array
-  index = mid+1;
-  for(int i=0; i<rightLength; i++) {
-    rightArr[i] = arr[index];
-    index++;
-  }
-
-  //merge logic
-  int i = 0;
-  int j = 0;
-  int mainArrayIndex = s;
-
-  while(i < leftLength && j < rightLength) {
-    if(leftArr[i] < rightArr[j]) {
-      arr[mainArrayIndex] = leftArr[i];
-      i++;
-      mainArrayIndex++;
+    for(int i=0;i<arr.size();i++){
+        cout<<arr[i]<<" ";
     }
-    else {
-      arr[mainArrayIndex] = rightArr[j];
-      j++;
-      mainArrayIndex++;
+    cout<<endl;
+}
+
+// it is just a function for understanding
+// but it is not being used in mergeSort algo logic
+void mergeSortedArray(vector<int>&arr,vector<int>&arr2,vector<int>&ans){
+
+    int i=0;
+    int j=0;
+
+    while(i<arr.size() && j<arr.size()){
+
+        if(arr[i]<arr2[j]){
+            ans.push_back(arr[i]);
+            i++;
+        }
+        else{
+            ans.push_back(arr2[j]);
+            j++;
+        }
+
     }
-  }
 
-  ///I have to handle the 2 cases discussed above in Merge 2 sorted arrays wala question
+    while(i<arr.size()){
+        ans.push_back(arr[i]);
+        i++;
+    }
 
-  while(i < leftLength) {
-     arr[mainArrayIndex] = leftArr[i];
-      i++;
-      mainArrayIndex++;
-  }
-
-  while(j < rightLength) {
-    arr[mainArrayIndex] = rightArr[j];
-      j++;
-      mainArrayIndex++;
-  }
-
-  //delete heap memory 
-  delete[] leftArr;
-  delete[] rightArr;
+    while(j<arr2.size()){
+        ans.push_back(arr2[j]);
+        j++;
+    }
 
 }
 
-void mergeSort(int arr[], int s, int e) {
-  //base case
-  if(s >= e) {
-    return;
-  }
-  int mid = (s+e)/2;
-  //left part recursion se solve karwao 
-  mergeSort(arr,s,mid);
-  //right part recursion se solve karwao
-  mergeSort(arr,mid+1, e);
-  //dono parts ko merge kardo
-  merge(arr,s,e,mid);
+
+void merge(vector<int>&arr,int s,int e,int mid){
+
+
+    // create left and right arrays
+    int leftLength = mid-s+1;
+    int rightLength = e-mid;
+
+    int *leftArray = new int[leftLength];
+    int *rightArray = new int[rightLength];
+
+    // fill or copy the left and right arrays
+    int index = s;
+
+    // copying into left array
+    for(int i=0;i<leftLength;i++){
+        leftArray[i] = arr[index];
+        index++;
+    }
+
+    // copying into right array
+    index = mid+1;
+    for(int i=0;i<rightLength;i++){
+        rightArray[i] = arr[index];
+        index++;
+    }
+
+    // merge logic
+    int leftIndex = 0;
+    int rightIndex = 0;
+    int mainArrayIndex = s;
+
+    while(leftIndex<leftLength && rightIndex < rightLength){
+
+        if(leftArray[leftIndex] < rightArray[rightIndex]){
+            arr[mainArrayIndex] = leftArray[leftIndex];
+            leftIndex++;
+            mainArrayIndex++;
+        }
+        else{
+            arr[mainArrayIndex] = rightArray[rightIndex];
+            rightIndex++;
+            mainArrayIndex++;
+        }
+
+    }
+
+    while(leftIndex < leftLength){
+        arr[mainArrayIndex] = leftArray[leftIndex];
+        leftIndex++;
+        mainArrayIndex++;
+    }
+    while(rightIndex < rightLength){
+        arr[mainArrayIndex] = rightArray[rightIndex];
+        rightIndex++;
+        mainArrayIndex++;
+    }
+
+    // delete heap memory
+    delete[] leftArray;
+    delete[] rightArray;
+
 }
 
-int main() {
-  int arr[] = {10,80,110,90,50,30,40,20};
-  int size = 8;
-  int s = 0;
-  int e = size - 1;
+void mergeSort(vector<int>&arr,int s,int e){
 
-  cout << "BEfore: " << endl;
-  for(int i=0; i<size; i++) {
-    cout << arr[i] << " ";
-  }
-  cout << endl;
+    // base case
+    if(s>=e) return;
 
-  mergeSort(arr,s,e);
+    int mid = s+(e-s)/2;
 
-  //printing entire array
-  cout << "After: " << endl;
-  for(int i=0; i<size; i++) {
-    cout << arr[i] << " ";
-  }
-  cout << endl;
-  
+    // left part recursion se solve karwao
+    mergeSort(arr,s,mid);
+    // right part recursion se solve karwao
+    mergeSort(arr,mid+1,e);
+    // dono parts ko merge kardo
+    merge(arr,s,e,mid);
+
+}
 
 
-  // int arr[] = {10,30,50,70};
-  // int sizeArr = 4;
+int main(){
 
-  // int brr[] = {20,40,60,80,90,100};
-  // int sizeBrr = 6;
+    vector<int> arr = {10,80,110,90,50,30,40,20};
+    int s = 0;
+    int e = arr.size()-1;
 
-  // vector<int> ans;
-  // mergeSortedArrays(arr,sizeArr, brr, sizeBrr, ans);
-  // //printing ans
-  // for(int num: ans) {
-  //   cout << num << " ";
-  // }
+    // before
+    printArray(arr);
+    cout<<endl;
 
-  return 0;
+    // merge sort getting applied
+    mergeSort(arr,s,e);
+
+    // after
+    printArray(arr);
+
+    return 0;
 }
