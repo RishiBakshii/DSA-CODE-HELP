@@ -1,0 +1,11 @@
+in linked list questions we need to take care of these things:
+
+1. there should not be any null pointer exception
+    - i.e we should we not try to access anything on a null pointer
+
+
+2. always think about edge cases like
+    - empty
+    - single node
+    - even node
+    - odd node
